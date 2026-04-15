@@ -1,17 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useAppState } from '@/state/app-state';
+import { Redirect } from 'expo-router';
 
 export default function Index() {
-  return (
-    <View style={styles.container}>
-      <Text>Edit src/app/index.tsx to edit this screen.</Text>
-    </View>
-  );
-}
+  const { isBootstrapping, isAuthenticated } = useAppState();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (isBootstrapping) {
+    return <Redirect href={'/splash' as any} />;
+  }
+
+  if (isAuthenticated) {
+    return <Redirect href={'/(tabs)' as any} />;
+  }
+
+  return <Redirect href={'/login' as any} />;
+}
