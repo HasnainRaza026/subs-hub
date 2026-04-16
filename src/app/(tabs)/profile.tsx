@@ -2,8 +2,10 @@ import { DEMO_CREDENTIALS } from '@/data/mock-user';
 import { useAppState } from '@/state/app-state';
 import { router } from 'expo-router';
 import { Pressable, ScrollView, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
+  const insets = useSafeAreaInsets();
   const { currentUser, signOut } = useAppState();
 
   const handleSignOut = () => {
@@ -16,6 +18,7 @@ export default function ProfileScreen() {
       className='flex-1 bg-[#0E1A2B]'
       contentInsetAdjustmentBehavior='automatic'
       contentContainerClassName='gap-3.5 p-5'
+      contentContainerStyle={{ paddingBottom: insets.bottom + 16 }}
     >
       <View className='gap-1.5'>
         <Text selectable className='font-bold tracking-[1.2px] text-[#BBD0EA]'>

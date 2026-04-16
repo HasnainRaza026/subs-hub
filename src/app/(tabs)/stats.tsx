@@ -5,8 +5,10 @@ import {
   getYearlyProjection,
 } from '@/data/subscription-metrics';
 import { ScrollView, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function StatsScreen() {
+  const insets = useSafeAreaInsets();
   const monthly = getMonthlySpend();
   const yearly = getYearlyProjection();
   const breakdown = getCategoryBreakdown();
@@ -16,6 +18,7 @@ export default function StatsScreen() {
       className='flex-1 bg-[#0E1A2B]'
       contentInsetAdjustmentBehavior='automatic'
       contentContainerClassName='gap-3.5 p-5'
+      contentContainerStyle={{ paddingBottom: insets.bottom + 16 }}
     >
       <View className='gap-1.5'>
         <Text selectable className='font-bold tracking-[1.2px] text-[#BBD0EA]'>

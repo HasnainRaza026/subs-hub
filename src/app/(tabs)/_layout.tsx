@@ -2,6 +2,7 @@ import { useAppState } from '@/state/app-state';
 import { palette } from '@/theme/tokens';
 import { Redirect, Tabs } from 'expo-router';
 import { Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function TabIcon({ glyph }: { glyph: string }) {
   return <Text className='text-sm'>{glyph}</Text>;
@@ -9,6 +10,7 @@ function TabIcon({ glyph }: { glyph: string }) {
 
 export default function TabsLayout() {
   const { isAuthenticated, isBootstrapping } = useAppState();
+  const insets = useSafeAreaInsets();
 
   if (isBootstrapping) {
     return null;
@@ -22,16 +24,17 @@ export default function TabsLayout() {
     <Tabs
       initialRouteName='index'
       screenOptions={{
-        headerStyle: { backgroundColor: palette.background },
-        headerTintColor: palette.textPrimary,
-        headerTitleStyle: { fontWeight: '700' },
-        sceneStyle: { backgroundColor: palette.background },
+        headerShown: false,
+        sceneStyle: {
+          backgroundColor: palette.background,
+          paddingBottom: insets.bottom,
+        },
         tabBarStyle: {
           backgroundColor: '#102037',
           borderTopColor: '#1A3456',
-          height: 70,
-          paddingBottom: 10,
-          paddingTop: 10,
+          height: 60 + insets.bottom,
+          paddingBottom: Math.max(insets.bottom, 10),
+          paddingTop: 8,
         },
         tabBarActiveTintColor: palette.accent,
         tabBarInactiveTintColor: '#84A3C6',
